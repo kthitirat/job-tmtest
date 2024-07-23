@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
-    use HasFactory;
-    protected $fillable = ['name'];
+    use HasFactory;  
+    protected $fillable = ['name'];     //ข้อมูลอะไร Save ลงดาต้าเบสได้
+    
 }
