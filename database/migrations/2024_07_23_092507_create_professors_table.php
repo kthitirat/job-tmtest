@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('last_name')->nullable();
             $table->timestamps();
 
-            $table->foreign('department_id')
+            $table->foreign('department_id')                    
             ->references('id')
             ->on('departments')
             ->onDelete('cascade');
