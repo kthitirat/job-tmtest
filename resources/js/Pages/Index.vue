@@ -2,24 +2,14 @@
     <Layout>
         <div class="w-full">
             <div class="flex justify-center">
-                <h1 class="text-4xl font-bold text-gray-700">เอกสารประกอบการสอน </h1>
-                <h1 class="text-4xl font-bold text-blue-600">(PowerPoint)</h1>
+                <h1 class="text-2xl md:text-4xl font-bold text-gray-700">เอกสารประกอบการสอน</h1>
+                <h1 class="text-2xl md:text-4xl font-bold text-blue-600">(PowerPoint)</h1>
             </div>
-            <div class="grid grid-cols-4 gap-6 px-16 mt-10">
-                <div class="w-full border border-slate-200 p-4 text-gray-700 hover:text-red-800 hover:shadow-lg transition-all ease-in-out duration-500 cursor-pointer">
-                    <img class="w-full h-80 object-cover" src="https://picsum.photos/400/800">
-                    <!-- <img class="w-full h-[500px] object-cover" src="https://picsum.photos/400/800"> -->
-                     <div class="mt-2">
-                        <p class="text-lg text-center leading-5">รายวิชา 1161207 การอ่านคิดพัฒนาชีวิต</p>
-                        <div class="text-sm text-center mt-4 text-gray-700 font-normal">
-                            <p>อาจารย์รุ่งทิวา สุภานันท์</p>
-                            <p>คณะครุศาสตร์</p>
-                            <p>เผยแพร่วันที่ 10 มิถุนายน 2567</p>
-                            <p>จำนวนผู้เยี่ยมชม: </p>
-                        </div>
-                     </div>
-                </div>
-                         
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 md:px-16 mt-10">
+                <div v-for="(subject,index) in subjectData" :key="subject.id">   
+                    <TeachingMaterialCard :subject="subject"/>  
+                </div>    
             </div>
         </div>
     </Layout>
@@ -27,18 +17,35 @@
 
 <script>
 import Layout from "@/Pages/Layout/Layout.vue";
-//import TeachingMaterialCard from "@/Pages/Components/TeachingMaterialCard.vue";
+import TeachingMaterialCard from "@/Pages/Components/TeachingMaterialCard.vue";
 import axios from 'axios';
 import {Link} from "@inertiajs/vue3";
 import {router} from "@inertiajs/vue3";
 
 export default {
     name: "Index",
-    components: {Layout},
+    components: {Layout, TeachingMaterialCard},
     props: {
-
+        subjects:{
+            type:Object,
+            required: true
+        } 
 
     },
+    data() {                        //data สร้างตัวแปร       
+        return {
+            subjectData: null,
+            pagination: null
+        }
+    },
+    mounted() {                 //เอาไว้เช็คเพจทำการโหลดให้ทำอะไร สมมุติหน้านี้โหลดให้เแสดงข้อมูล subjects
+        this.subjectData = this.subjects.data
+        this.pagination = this.subjects.meta.pagination;
+
+        // console.log('-----------');
+        // console.log(this.pagination);
+        // console.log('-----------');
+    }
 
 
 };

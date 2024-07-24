@@ -8,15 +8,22 @@ use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\User;
 use App\Models\Subject;
+use App\Http\Transformers\SubjectTransformer;
 
 class PageController extends Controller
 {
     public function index()
     {
-        //$subjects = Subject::all();
+        $subjects = Subject::with('professors')->whereNotNull('published_at')->paginate(10);
+        $subjectData = fractal($subjects, new SubjectTransformer())->toArray();
         
-        return Inertia::render('Index');
+        return Inertia::render('Index')->with([
+            'subjects' => $subjectData
+        ]);
     }
+
+
+
 
     public function dashboard()
     {
