@@ -18,7 +18,8 @@ class SubjectTransformer extends TransformerAbstract
             'name_en' => $subject->name_en,
             'code' => $subject->code,
             'professors' => fractal($subject->professors, new ProfessorTransformer())->toArray()['data'],
-            'published_at' => $subject->published_at ? Carbon::parse($subject->published_at)->thaidate('j M Y') : null
+            'published_at' => $subject->published_at ? Carbon::parse($subject->published_at)->thaidate('j M Y') : null,
+            'view' => $subject->view,
            
         ];
         return $data;

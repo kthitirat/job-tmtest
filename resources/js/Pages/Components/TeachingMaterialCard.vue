@@ -10,7 +10,7 @@
                         <p>{{ professor.department.name }}</p>
                     </div>
                     <p>เผยแพร่วันที่ {{ subject.published_at }}</p>
-                    <p>จำนวนผู้เยี่ยมชม: </p>
+                    <p>จำนวนผู้เยี่ยมชม: {{ subject.view }}</p>
                 </div>
             </div>
         </div>
