@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Professor;
 
 class Subject extends Model
 {
@@ -23,4 +24,11 @@ class Subject extends Model
         'published_at' => 'datetime',
         'view' => 'integer',
     ];
+
+    public function professors()
+    {
+        return $this->belongsToMany(Professor::class);   //subject มีอาจารย์ได้หลายคน
+    } 
+
 }
+

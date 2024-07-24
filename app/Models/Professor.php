@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\department;
+use App\Models\Subject;
 
 class Professor extends Model
 {
@@ -18,4 +19,11 @@ class Professor extends Model
     {
         return $this->belongsTo(Department::class, 'department_id');   //belongsTo แบบหลายต่อหนึ่ง อาจารย์หนึ่งคนสังกัดแผนกเดียว
     }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(Subject::class);   //Professor สอนหลาย Subject
+    }     
+
+
 }
