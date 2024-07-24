@@ -23,10 +23,12 @@ class SubjectSeeder extends Seeder
             'description' => 'ความรู้เบื้องต้นและการนำแนวคิดด้านการออมไปประยุกต์ใช้ในชีวิต บทบาท หน้าที่และความรับผิดชอบในการเสียภาษี รวมถึงสิทธิ์ประโยชน์ทางภาษีตามแนวนโยบายของภาครัฐบาล ความรู้ ความเข้าใจเกี่ยวกับการลงทุนในสินทรัพย์ทางการเงิน และการสร้างผลตอบแทนของเงินออมในการลงทุนในตลาดเงินและตลาดทุน การวางแผนทางการเงินให้สอดคล้องในสภาวะเศรษฐกิจ สู่การเกษียณอายุอย่างยั่งยืน',
             'published_at' => Carbon::today()
         ]);
+
+        $subject = Subject::first();
+        $subject->professors()->attach(Professor::first()->id ?? Professor::factory());
+
         Subject::factory()->count(10)->create();
-
-
-        $subjects = Subject::all();
+        $subjects = Subject::all();     
         foreach ($subjects as $subject) {
            $subject->professors()->attach(Professor::inRandomOrder()->first()->id);
         }
