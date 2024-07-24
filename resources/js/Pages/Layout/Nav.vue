@@ -13,12 +13,12 @@
             </Link> -->
             <div class="flex gap-2">
                 <a href="https://www.aru.ac.th/asi"
-                    class="text-[#92392f] px-1 py-0.5 border-[#92392f] border-l-0 border-r-0 border-t-0 border-2 font-bold hidden lg:block"
+                    class="text-[#92392f] px-1 py-0.5 border-[#92392f] border-l-0 border-r-0 border-t-0 border-2hidden lg:block"
                     >
                     Home
                 </a>
                  <Link
-                    class="text-[#92392f] px-1 py-0.5 border-[#92392f] border-l-0 border-r-0 border-t-0 border-2 font-bold hidden lg:block ml-10"
+                    class="text-[#92392f] px-1 py-0.5 border-[#92392f] border-l-0 border-r-0 border-t-0 border-2  hidden lg:block ml-10"
                     :href="route('login')">
                     Login
                 </Link>
