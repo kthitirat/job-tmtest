@@ -7,9 +7,21 @@
             </div>
             
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 md:px-16 mt-10">
-                <div v-for="(subject,index) in subjectData" :key="subject.id">   
+                <div v-for="(subject,index) in subjectData" :key="subject.id">
                     <TeachingMaterialCard :subject="subject"/>  
                 </div>    
+            </div>
+            <div v-if="pagination !== null" class="px-4 md:px-6 lg:px10 xl:px-16 mt-4 flex justify-end">
+                <!-- {{ pagination.links }} -->
+                <div class="join">
+                    <Link v-for="(pagination,index) in pagination.links" :key="index" 
+                            :class="pagination.active ?'btn-active':''" 
+                            :href="pagination.url"                             
+                            class="join-item btn">
+                            {{ pagination.label }}
+                    </Link>
+                   
+                </div>
             </div>
         </div>
     </Layout>
@@ -24,7 +36,7 @@ import {router} from "@inertiajs/vue3";
 
 export default {
     name: "Index",
-    components: {Layout, TeachingMaterialCard},
+    components: {Layout, TeachingMaterialCard, Link},
     props: {
         subjects:{
             type:Object,

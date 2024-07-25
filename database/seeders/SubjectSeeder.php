@@ -27,7 +27,7 @@ class SubjectSeeder extends Seeder
         $subject = Subject::first();
         $subject->professors()->attach(Professor::first()->id ?? Professor::factory());
 
-        Subject::factory()->count(10)->create();
+        Subject::factory()->count(100)->create();
         $subjects = Subject::all();     
         foreach ($subjects as $subject) {
            $subject->professors()->attach(Professor::inRandomOrder()->first()->id);
