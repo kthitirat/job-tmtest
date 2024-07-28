@@ -21,13 +21,17 @@
                     </svg>
                 </label>
             </div>
-            
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 md:px-16">
-                <div v-for="(subject,index) in subjectData" :key="subject.id">
-                    <TeachingMaterialCard :subject="subject"/>  
-                </div>    
-            </div>
-            <div v-if="pagination !== null" class="px-4 md:px-6 lg:px10 xl:px-16 mt-4 flex justify-end">
+            <div v-if="subjectData && subjectData.length > 0">
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4 md:px-16">
+                    <div v-for="(subject,index) in subjectData" :key="subject.id">
+                        <TeachingMaterialCard :subject="subject"/>  
+                    </div>    
+                </div>
+            </div>  
+            <div v-if="subjectData && subjectData.length === 0" class="flex w-full h-20 justify-center mt-4">
+                <p>ไม่พบข้อมูล</p>
+            </div>        
+            <div v-if="subjectData && subjectData.length > 0 && pagination !== null" class="px-4 md:px-6 lg:px10 xl:px-16 mt-4 flex justify-end">
                 <!-- {{ pagination.links }} -->
                 <div class="join">
                     <Link v-for="(pagination,index) in pagination.links" :key="index" 
@@ -64,7 +68,7 @@ export default {
         return {
             subjectData: null,
             pagination: null,
-            search: new URLSearchParams(window.location.search).get('subjects') ?? null,
+            search: new URLSearchParams(window.location.search).get('search') ?? null,
             debouce: null,
         }
     },
@@ -79,22 +83,20 @@ export default {
     },
     methods: {
         async submitSearch() {
-            const url = this.route('index',{
+            const url = this.route('index', {
                 search: this.search
             })
             await router.visit(url, {
                 only: ['subjects'],
-                })
+            })
         }
-
     },
     watch: {
         search() {
-            clearTimeout(this.debouce)
-            this.debouce = setTimeout(() => {
+            clearTimeout(this.debounce)
+            this.debounce = setTimeout(() => {
                 this.submitSearch();
             }, 500);
-           
         }
     },
 
