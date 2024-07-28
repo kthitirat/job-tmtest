@@ -1,5 +1,7 @@
 <template>
-      <div class="flex justify-center py-6 min-h-[550px]">
+      <div 
+         @click="visitSubject"
+        class="flex justify-center py-6 min-h-[550px]">
         <div class="max-w-sm w-full border border-slate-200 p-4 text-gray-700 hover:text-red-800 hover:shadow-lg transition-all ease-in-out duration-500 cursor-pointer relative">
             <img class="w-full h-64 object-cover" src="https://picsum.photos/400/800">
             <div class="mt-4 space-y-4">
@@ -29,8 +31,12 @@
 </template>
 
 <script>
+import {router} from "@inertiajs/vue3";
 export default {
     name:"TeachingMaterialCard",
+    components:{
+      
+    },
     props: {
         subject: {
             type: Object,
@@ -42,6 +48,11 @@ export default {
         // console.log('-----------');
         // console.log(this.subject);
         // console.log('-----------');
+    },
+    methods:{
+        visitSubject() {
+            router.visit(this.route('subjects.show', this.subject.id));
+        }
     }
 
 }
