@@ -7,9 +7,12 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Models\Subject;
 use App\Models\Department;
 use App\Models\Professor;
+use App\Http\Transformers\ImageTransformer;
 
 class ProfessorTransformer extends TransformerAbstract
 {
+    protected array $availableIncludes = ['image'];
+
     public function transform(Professor $professor): array
     {
         $data = [
@@ -21,4 +24,11 @@ class ProfessorTransformer extends TransformerAbstract
         ];
         return $data;
     }
+
+    public function includeImage(Professor $professor)
+    {
+        $images = $professor->getMedia(Professor::MEDIA_COLLECTION_IMAGE);   
+        return $this->collection($images, new ImageTransformer());
+    }
+
 }

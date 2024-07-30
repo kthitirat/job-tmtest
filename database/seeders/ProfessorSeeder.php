@@ -22,5 +22,10 @@ class ProfessorSeeder extends Seeder
         
         ]);
         professor::factory()->count(10)->create();
+
+        $professors = Professor::all();
+        foreach ($professors as $professor)
+        $professor->addMedia(storage_path('seed/mock_professor_image.jpg'))->preservingOriginal()
+        ->toMediaCollection(Professor::MEDIA_COLLECTION_IMAGE);
     }
 }

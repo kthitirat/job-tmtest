@@ -6,7 +6,7 @@ use League\Fractal\TransformerAbstract;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Models\Subject;
 use App\Http\Transformers\ProfessorTransformer;
-use App\Http\Transformers\SubjectImageTransformer;
+use App\Http\Transformers\ImageTransformer;
 use Carbon\Carbon;
 
 class SubjectTransformer extends TransformerAbstract
@@ -22,7 +22,7 @@ class SubjectTransformer extends TransformerAbstract
             'code' => $subject->code,
             'view' => $subject->view,
             'description' => $subject->description,
-            'professors' => fractal($subject->professors, new ProfessorTransformer())->toArray()['data'],
+            'professors' => fractal($subject->professors, new ProfessorTransformer())->includeImage()->toArray()['data'],
             'published_at' => $subject->published_at ? Carbon::parse($subject->published_at)->thaidate('j M Y') : null,
            
         ];
@@ -32,7 +32,7 @@ class SubjectTransformer extends TransformerAbstract
     public function includeImage(Subject $subject)
     {
         $images = $subject->getMedia(Subject::MEDIA_COLLECTION_IMAGE);   
-        return $this->collection($images, new SubjectImageTransformer());
+        return $this->collection($images, new ImageTransformer());
     }
 
 }

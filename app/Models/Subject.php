@@ -41,7 +41,7 @@ class Subject extends Model implements HasMedia
              ->registerMediaConversions(function (Media $media) {
                 $this
                     ->addMediaConversion('optimized')
-                    ->fit(Manipulations::FIT_MAX, 560, 660)
+                    ->fit(Manipulations::FIT_MAX, 1072, 1528)
                     ->optimize()
                     ->keepOriginalImageFormat();
             });
