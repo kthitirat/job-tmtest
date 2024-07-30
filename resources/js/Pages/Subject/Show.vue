@@ -16,10 +16,11 @@
                         <div v-for="professor in subject.professors" :key="professor.id" class="flex gap-1">
                             <p class="ml-8">อาจารย์ {{ professor.prefix }} {{ professor.first_name }}
                                 {{ professor.last_name }}</p>
-                            <p v-if="subject.professors.length > 1" class="ml-8">{{ professor.department.name }}</p>
+                            <p v-if="subject.professors.length > 1" class="ml-8">{{ professor.department.name }}</p>  
+                            <!-- แสดงมากกว่า 1 คน -->
                         </div>
                     </div>
-                    <div v-if="subject.professors.length === 1" class="w-full">
+                    <div v-if="subject.professors.length === 1" class="w-full">    <!-- แสดง 1 คน -->
                         <p class="font-bold">คณะ:</p>
                         <div class="flex gap-1">
                             <p class="ml-8">{{ subject.professors[0].department.name }}</p>
