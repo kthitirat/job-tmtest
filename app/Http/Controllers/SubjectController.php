@@ -30,7 +30,7 @@ class SubjectController extends Controller
         }
         Session::put($transformUserIP, $subject->id); 
         $subject->fresh();
-        $subjectData = fractal($subject, new SubjectTransformer())->includeImage()->toArray();
+        $subjectData = fractal($subject, new SubjectTransformer())->includeImage()->includeDocuments()->toArray();
         //จบเพิ่มยอด view
 
         return Inertia::render('Subject/Show')->with([

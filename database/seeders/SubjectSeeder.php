@@ -33,6 +33,11 @@ class SubjectSeeder extends Seeder
             $subject->professors()->attach(Professor::inRandomOrder()->first()->id);
             $subject->addMedia(storage_path('seed/mock_subject_image.jpg'))->preservingOriginal()
                 ->toMediaCollection(Subject::MEDIA_COLLECTION_IMAGE);
+
+            $subject->addMedia(storage_path('seed/mock_subject_pdf.pdf'))->preservingOriginal()
+            ->toMediaCollection(Subject::MEDIA_COLLECTION_DOCUMENTS);
+            $subject->addMedia(storage_path('seed/mock_subject_pdf.pdf'))->preservingOriginal()
+            ->toMediaCollection(Subject::MEDIA_COLLECTION_DOCUMENTS);
         }
 
     }

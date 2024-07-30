@@ -7,11 +7,12 @@ use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Models\Subject;
 use App\Http\Transformers\ProfessorTransformer;
 use App\Http\Transformers\ImageTransformer;
+use App\Http\Transformers\DocumentTransformer;
 use Carbon\Carbon;
 
 class SubjectTransformer extends TransformerAbstract
 {
-    protected array $availableIncludes = ['image'];
+    protected array $availableIncludes = ['image','documents'];   //เพิ่ม pdf โดยใส่ 'documents'
 
     public function transform(Subject $subject): array
     {
@@ -34,5 +35,12 @@ class SubjectTransformer extends TransformerAbstract
         $images = $subject->getMedia(Subject::MEDIA_COLLECTION_IMAGE);   
         return $this->collection($images, new ImageTransformer());
     }
+
+    public function includeDocuments(Subject $subject)                      //เพิ่ม pdf
+    {
+        $documents = $subject->getMedia(Subject::MEDIA_COLLECTION_DOCUMENTS);   
+        return $this->collection($documents, new DocumentTransformer());
+    }
+
 
 }

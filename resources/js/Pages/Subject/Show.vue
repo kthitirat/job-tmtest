@@ -71,18 +71,16 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>GE64303 การออมและการลงทุน</td>
-                        <td>ไฟล์นำเสนอ .pdf: GE64303 การออมและการลงทุน</td>
+                    <tr v-for="(doc,index) in subject.documents.data">
+                        <td>{{ subject.code }} {{ subject.name_th }}</td>
+
+                        <td>ไฟล์นำเสนอ .pdf: 
+                            <a :href="doc.url" target="_blank">                        
+                            {{ subject.code }} {{ subject.name_th }}
+                            </a>    
+                        </td>
                     </tr>
-                    <tr>
-                        <td>GE64303 การออมและการลงทุน</td>
-                        <td>ไฟล์นำเสนอ .pdf: GE64303 การออมและการลงทุน</td>
-                    </tr>
-                    <tr>
-                        <td>GE64303 การออมและการลงทุน</td>
-                        <td>ไฟล์นำเสนอ .pdf: GE64303 การออมและการลงทุน</td>
-                    </tr>
+                    
                     </tbody>
                 </table>
             </div>
