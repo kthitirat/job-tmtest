@@ -6,10 +6,13 @@ use League\Fractal\TransformerAbstract;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use App\Models\Subject;
 use App\Http\Transformers\ProfessorTransformer;
+use App\Http\Transformers\SubjectImageTransformer;
 use Carbon\Carbon;
 
 class SubjectTransformer extends TransformerAbstract
 {
+    protected array $availableIncludes = ['image'];
+
     public function transform(Subject $subject): array
     {
         $data = [
@@ -25,4 +28,11 @@ class SubjectTransformer extends TransformerAbstract
         ];
         return $data;
     }
+    
+    public function includeImage(Subject $subject)
+    {
+        $images = $subject->getMedia(Subject::MEDIA_COLLECTION_IMAGE);   
+        return $this->collection($images, new SubjectImageTransformer());
+    }
+
 }

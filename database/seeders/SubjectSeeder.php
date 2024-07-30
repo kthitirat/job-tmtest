@@ -9,7 +9,7 @@ use App\Models\Subject;
 use App\Models\Professor;
 
 
-class SubjectSeeder extends Seeder
+class SubjectSeeder extends Seeder 
 {
     /**
      * Run the database seeds.
@@ -27,10 +27,12 @@ class SubjectSeeder extends Seeder
         $subject = Subject::first();
         $subject->professors()->attach(Professor::first()->id ?? Professor::factory());
 
-        Subject::factory()->count(100)->create();
+        Subject::factory()->count(20)->create();
         $subjects = Subject::all();     
         foreach ($subjects as $subject) {
-           $subject->professors()->attach(Professor::inRandomOrder()->first()->id);
+            $subject->professors()->attach(Professor::inRandomOrder()->first()->id);
+            $subject->addMedia(storage_path('seed/mock_subject_image.jpg'))->preservingOriginal()
+                ->toMediaCollection(Subject::MEDIA_COLLECTION_IMAGE);
         }
 
     }
