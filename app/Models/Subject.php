@@ -35,6 +35,15 @@ class Subject extends Model implements HasMedia
         'view' => 'integer',
     ];
 
+    //เพิ่ม uuid (ลิงก์ที่ไม่โชว์ id จริง)
+    protected static function boot()
+    {
+        parent::boot();
+        static::creating(function ($subject) {
+            $subject->uuid = Str::uuid();
+        });
+    }
+
     
     public function registerMediaCollections(): void
     {
