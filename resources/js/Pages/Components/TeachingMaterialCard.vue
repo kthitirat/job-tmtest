@@ -1,9 +1,9 @@
 <template>
       <div 
         @click="visitSubject"
-        class="flex justify-center py-6 min-h-[550px]">
+        class="flex justify-center py-6 min-h-[670px]">
         <div class="max-w-sm w-full border border-slate-200 p-4 text-gray-700 hover:text-red-800 hover:shadow-lg transition-all ease-in-out duration-500 cursor-pointer relative">
-            <img v-if="subject.image.data.length > 0" :src="subject.image.data[0].url" class="w-full h-64 object-cover">
+            <img v-if="subject.image.data.length > 0" :src="subject.image.data[0].url" class="w-full  object-cover">
             <div class="mt-4 space-y-4">
                 <p class="text-lg text-center leading-5">รายวิชา {{ subject.code }} {{ subject.name_th }}</p>
                 <div class="text-sm text-center text-gray-700 font-normal space-y-2"> 

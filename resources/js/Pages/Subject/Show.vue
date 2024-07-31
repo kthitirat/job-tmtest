@@ -72,10 +72,12 @@
                     </thead>
                     <tbody>
                     <tr v-for="(doc,index) in subject.documents.data">
-                        <td>{{ subject.code }} {{ subject.name_th }}</td>
+                        <td>
+                            <p class="text-base text-gray-700">{{ subject.code }} {{ subject.name_th }}</p>
+                        </td>
 
                         <td>ไฟล์นำเสนอ .pdf: 
-                            <a :href="doc.url" target="_blank">                        
+                            <a class="text-blue-600 hover:text-blue-500 text-base" :href="doc.url" target="_blank">                        
                             {{ subject.code }} {{ subject.name_th }}
                             </a>    
                         </td>
