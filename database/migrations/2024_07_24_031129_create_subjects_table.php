@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->index();              //เพิ่ม uuid (ลิงก์ที่ไม่โชว์ id จริง)
             $table->text('name_th')->nullable();
             $table->text('name_en')->nullable();
             $table->string('code')->nullable();

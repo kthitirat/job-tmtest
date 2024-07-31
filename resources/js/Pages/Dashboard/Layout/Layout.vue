@@ -9,8 +9,7 @@
                     <div class="dropdown dropdown-end">
                         <div class="btn btn-ghost btn-circle avatar" role="button" tabindex="0">
                             <div class="w-10 rounded-full">
-                                <img alt="Tailwind CSS Navbar component"
-                                     src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"/>
+                                <img :src="this.$page.props.user.profile_photo_url" alt="Admin Logo"/>
                             </div>
                         </div>
                         <ul class="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52"

@@ -27,6 +27,7 @@ class Subject extends Model implements HasMedia
         'unit',
         'published_at',
         'view',
+        'uuid'           //เพิ่ม uuid (ลิงก์ที่ไม่โชว์ id จริง)
     ];
 
     protected $casts = [                                //ป้องกันการใส่ สคริป เข้ามา

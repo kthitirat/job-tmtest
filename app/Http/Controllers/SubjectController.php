@@ -15,8 +15,11 @@ class SubjectController extends Controller
         return redirect()->route('index');
     }
 
-    public function show(Subject $subject)
+    //public function show(Subject $subject)
+    public function show(string $subject)       //เพิ่ม uuid (ลิงก์ที่ไม่โชว์ id จริง)
     {
+        $subject = Subject::where('uuid', $subject)->first();  //เพิ่ม uuid (ลิงก์ที่ไม่โชว์ id จริง)
+
         if($subject->published_at === null) {
             abort(403, 'unauthorized.');
         }

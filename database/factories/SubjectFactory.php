@@ -17,6 +17,7 @@ class SubjectFactory extends Factory
     public function definition(): array
     {
         return [
+            'uuid' => $this->faker->uuid,           //เพิ่ม uuid (ลิงก์ที่ไม่โชว์ id จริง)
             'name_th' => $this->faker->sentence, 
             'name_en' => $this->faker->sentence, 
             'code' => strtoupper($this->faker->randomLetter().$this->faker->randomLetter().$this->faker->randomNumber(5)),
