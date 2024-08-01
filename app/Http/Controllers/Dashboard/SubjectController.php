@@ -30,9 +30,10 @@ class SubjectController extends Controller
         ]);
     }
 
-    public function store(Request $request)
+    public function store(CreateOrUpdateSubjectRequest $request, SaveSubjectAction $action )
     {
-        dd($request->all());
+        $action->execute(new Subject(), $request->validated());
+       
     }
 
    
