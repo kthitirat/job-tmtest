@@ -18,8 +18,8 @@ class CreateOrUpdateSubjectRequest extends FormRequest
             'professors' => ['nullable', 'array', 'min:1'],
             'professors.*.id' => ['nullable','exists:professors,id'],
             'image' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:102400'], // Maximum size 100MB
-            'documents' => ['nullable', 'array'],
-            'documents.*' => ['required', 'mimes:pdf,doc,docx', 'max:102400'], // Maximum size 100MB
+            'documents' => ['required', 'array', 'min:1'],
+            'documents.*' => ['required', 'mimes:pdf,ppt,pptx,doc,docx,xls,xlsx', 'max:102400'], // Maximum size 100MB
 
 
             //ตัวอย่างของเดิม
@@ -35,6 +35,11 @@ class CreateOrUpdateSubjectRequest extends FormRequest
             // 'delete_medias' => ['nullable'],
             // 'delete_medias.*' => ['integer']
         ];
+        if (request()->method == 'PATCH') {
+            $rules['image'] = ['nullable', 'image', 'mimes:jpeg,png,jpg', 'max:102400'];
+            $rules['documents.*'] = ['nullable'];
+        }
+
         return $rules;
     }
 }

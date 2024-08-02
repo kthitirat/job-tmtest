@@ -5,6 +5,7 @@ namespace App\Actions\Dashboard;
 use App\Models\Subject;
 use App\Models\Article;
 use DOMDocument;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
 class SaveSubjectAction
@@ -13,7 +14,6 @@ class SaveSubjectAction
 
     public function execute(Subject $subject, array $data)
     {
-        
         $this->subject = $subject;
         $this->subject->code = $data['code'];
         $this->subject->name_th = $data['name_th'];
@@ -26,7 +26,8 @@ class SaveSubjectAction
         $this->subject = $this->subject->fresh();
         $this->handleAssignProfessors($data['professors']);          //อัปโหลดอาจารย์
         $this->uploadSubjectImage($data['image']);                   //อัปโหลดภาพอาจารย์
-        $this->uploadSubjectDocument($data['documents']);
+        $this->uploadSubjectDocuments($data['documents']);
+
         return $this->subject;
 
        
@@ -77,19 +78,24 @@ class SaveSubjectAction
     {
         $professorCollection = collect($professors);
         $professorIds = $professorCollection->pluck('id')->toArray();
-        $this->subject->professors()->attach($professorIds);
+        $this->subject->professors()->sync($professorIds);
     }
 
     //อัปโหลดภาพอาจารย์
     private function uploadSubjectImage($image): void
     {
+        if ($image == null) {
+            return;
+        }
         $this->subject->addMedia($image)->toMediaCollection(Subject::MEDIA_COLLECTION_IMAGE);
     }
 
-    private function uploadSubjectDocument($documents): void
+    private function uploadSubjectDocuments($documents): void
     {
         foreach ($documents as $document) {
-            $this->subject->addMedia($document)->toMediaCollection(Subject::MEDIA_COLLECTION_DOCUMENTS);   //หลาย documents
+            if ($documents instanceof UploadedFile) {
+                $this->subject->addMedia($document)->toMediaCollection(Subject::MEDIA_COLLECTION_DOCUMENTS);
+            }
         }
     }
 

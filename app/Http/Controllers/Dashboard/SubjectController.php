@@ -16,8 +16,10 @@ class SubjectController extends Controller
 {
     public function index()
     {
+        $subjects = Subject::orderBy('published_at', 'desc')->paginate(20);
+        $subjectData = fractal($subjects, new SubjectTransformer())->includeImage()->toArray();
         return Inertia::render('Dashboard/Subject/Index')->with([
-           
+            'subjects' =>  $subjectData
         ]);
     }
 
@@ -37,8 +39,24 @@ class SubjectController extends Controller
         return redirect()->route('dashboard.subjects.index');
     }
 
+    public function edit(Subject $subject)
+    {
+        $professors = Professor::all();
+        $professorData = fractal($professors, new ProfessorTransformer())->includeImage()->toArray()['data'];
+        $subjectData = fractal($subject, new SubjectTransformer())->includeImage()->includeDocuments()->toArray();
+        return Inertia::render('Dashboard/Subject/Edit')->with([
+            'professors' => $professorData,
+            'subject'   => $subjectData
+        ]);
+        
+    }
+
+    public function update(Subject $subject, createOrUpdateSubjectRequest $request, SaveSubjectAction $action)
+    {
+        $action->execute($subject, $request->validated());
+        return redirect()->route('dashboard.subjects.index')->with('success', 'subject updated.');
+    }
+
    
-
-
 
 }
