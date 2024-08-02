@@ -30,10 +30,11 @@ class SubjectController extends Controller
         ]);
     }
 
-    public function store(CreateOrUpdateSubjectRequest $request, SaveSubjectAction $action )
+    public function store(CreateOrUpdateSubjectRequest $request, SaveSubjectAction $action)
     {
-        $action->execute(new Subject(), $request->validated());
-       
+        $newSubject = $action->execute(new Subject(), $request->validated());
+        $newSubjectData = fractal($newSubject, new SubjectTransformer())->includeImage()->includeDocuments()->toArray();
+        return redirect()->route('dashboard.subjects.index');
     }
 
    

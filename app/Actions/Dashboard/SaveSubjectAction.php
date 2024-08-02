@@ -11,23 +11,25 @@ class SaveSubjectAction
 {
     protected Subject $subject;
 
-    public function execute(Subject $subject, array $data): Subject
+    public function execute(Subject $subject, array $data)
     {
         
-        $this->Subject = $subject;
-        $this->Subject->code = $data['code'];
-        $this->Subject->name_th = $data['name_th'];
-        $this->Subject->name_en = $data['name_en'];
-        $this->Subject->unit = $data['unit'];
-        $this->Subject->published_at = $data['published_at'];
-        $this->Subject->description = $data['description'];
+        $this->subject = $subject;
+        $this->subject->code = $data['code'];
+        $this->subject->name_th = $data['name_th'];
+        $this->subject->name_en = $data['name_en'];
+        $this->subject->unit = $data['unit'];
+        $this->subject->published_at = $data['published_at'];
+        $this->subject->description = $data['description'];
+        $this->subject->save();
 
-        $this->Subject->save();
+        $this->subject = $this->subject->fresh();
+        $this->handleAssignProfessors($data['professors']);          //อัปโหลดอาจารย์
+        $this->uploadSubjectImage($data['image']);                   //อัปโหลดภาพอาจารย์
+        $this->uploadSubjectDocument($data['documents']);
+        return $this->subject;
 
-        dd('ok');
-
-
-
+       
         //ของเดิม
         // $this->announcement = $announcement;
         // $this->announcement->type_id = $data['type_id'];
@@ -49,8 +51,6 @@ class SaveSubjectAction
         // return $this->announcement->fresh();
     }
 
-
-
     // private function handleFileUpload(array $files): void
     // {
     //     foreach ($files as $file) {
@@ -71,5 +71,26 @@ class SaveSubjectAction
     //     }
     //     return $count;
     // }
+
+    //สร้างฟังชันก์  handleAssignProfessors  อัปโหลดอาจารย์
+    private function handleAssignProfessors($professors): void
+    {
+        $professorCollection = collect($professors);
+        $professorIds = $professorCollection->pluck('id')->toArray();
+        $this->subject->professors()->attach($professorIds);
+    }
+
+    //อัปโหลดภาพอาจารย์
+    private function uploadSubjectImage($image): void
+    {
+        $this->subject->addMedia($image)->toMediaCollection(Subject::MEDIA_COLLECTION_IMAGE);
+    }
+
+    private function uploadSubjectDocument($documents): void
+    {
+        foreach ($documents as $document) {
+            $this->subject->addMedia($document)->toMediaCollection(Subject::MEDIA_COLLECTION_DOCUMENTS);   //หลาย documents
+        }
+    }
 
 }

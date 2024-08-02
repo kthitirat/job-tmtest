@@ -16,7 +16,7 @@ class CreateOrUpdateSubjectRequest extends FormRequest
             'published_at' => ['nullable', 'date'],
             'description' => ['nullable'],
             'professors' => ['nullable', 'array', 'min:1'],
-            'professors.*id' => ['nullable','exists:professors,id'],
+            'professors.*.id' => ['nullable','exists:professors,id'],
             'image' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:102400'], // Maximum size 100MB
             'documents' => ['nullable', 'array'],
             'documents.*' => ['required', 'mimes:pdf,doc,docx', 'max:102400'], // Maximum size 100MB
