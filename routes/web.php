@@ -21,6 +21,7 @@ Route::get('/', [PageController::class, 'index'])->name('index');
 Route::resource('/subjects', SubjectController::class);
 
 
+
 // Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
 // Route::get('/get-all-announcements-type', [AnnouncementController::class, 'getAllAnnouncementTypes'])->name(
 //     'announcements.get_all_announcement_types'

@@ -21,6 +21,7 @@ class ProfessorTransformer extends TransformerAbstract
             'prefix' => $professor->prefix,
             'first_name' => $professor->first_name,
             'last_name' => $professor->last_name,
+            'fullname' => $professor->prefix. ' ' .$professor->first_name. ' ' .$professor->last_name,
         ];
         return $data;
     }

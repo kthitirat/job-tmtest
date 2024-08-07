@@ -5,47 +5,32 @@
                 <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <th class="px-6 py-3">#</th>
-                    <th class="px-6 py-3">ภาพหน้าปก</th>
-                    <th class="px-6 py-3">รหัสวิชา</th>
-                    <th class="px-6 py-3">ชื่อวิชา</th>                  
-                    <th class="px-6 py-3">วันที่เผยแพร่</th>                   
-                    <th class="px-6 py-3">อาจารย์ผู้สอน</th>                   
+                    <th class="px-6 py-3">รูป</th>
+                    <th class="px-6 py-3">ชื่อ - นามสกุล</th>
+                    <th class="px-6 py-3">คณะ</th>                 
                     <th class="px-6 py-3">Action</th>                   
                 </tr>
                 </thead>
-                <tbody v-if="subjectData!=null">
-                <tr v-for="(subject,index) in subjectData" :key="index"
+                <tbody v-if="professorData!=null">
+                <tr v-for="(professor,index) in professorData" :key="index"
                     class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                     <!-- <th>{{ index + 1 }}</th> -->
-                    <th class="text-center">{{ subject.raw_id }}</th>
-                    <!-- <td class="px-6 py-4">
-                        <Link :href="route('dashboard.announcements.show',announcement.id)" class="underline">
-                            {{ subject.title }}
-                        </Link>
-                    </td> -->
+                    <th class="text-center">{{ professor.id }}</th>
                     <td class="px-6 py-4">
-                        <div v-if="subject.image.data.length > 0" class="w-20 h-25">
-                            <img :src="subject.image.data[0].url" class="object-cover h-full w-50">
+                        <div v-if="professor.image.data.length > 0 " class="w-20 h-32">
+                            <img :src="professor.image.data[0].url" class="object-cover h-full w-20">
                         </div>
-                    </td>
-                    
-                    <td class="px-6 py-4">{{ subject.code }}</td>
+                    </td> 
                     <td>
-                        <Link :href="route('dashboard.subjects.edit',subject.raw_id)" class="underline">
-                            <p> {{ subject.name_th }}</p>
-                            <p> {{ subject.name_en }}</p>
+                        <Link :href="route('dashboard.professors.edit',professor.id)" class="underline">
+                            <p>{{ professor.fullname }}</p>
                         </Link>
-                    </td>
-                    <td class="px-6 py-4">{{ subject.display_published_at }}</td>
+                    </td>        
                     <td>
-                        <div>
-                            <p v-for="(professor) in subject.professors">
-                                {{ professor.prefix }} {{ professor.first_name }} {{ professor.last_name }}
-                            </p>
-                        </div>                        
-                    </td>
+                        <p>{{ professor.department.name }}</p>
+                    </td>                      
                     <td>
-                        <button @click="handleDeleteSubject(subject)" type="button" class="btn btn-error text-white btn-sm font-light">
+                        <button @click="handleDeleteprofessor(professor)" type="button" class="btn btn-error text-white btn-sm font-light">
                             Delete
                         </button>
                     </td>   
@@ -74,13 +59,13 @@ import {Inertia} from "@inertiajs/inertia";
 import {nextTick} from "vue";
 
 export default {
-    name:"SubjectIndex",
+    name:"ProfessorIndex",
     components: {
         Link,
         Layout,
     },
     props: {
-        subjects:{
+        professors:{
             type: Object,
             required: true
         }
@@ -88,27 +73,27 @@ export default {
 
     data() {
         return{
-            subjectData: null,
+            professorData: null,
             pagination: null
         }
     },
     mounted() {
-        this.subjectData = this.subjects.data;
-        this.pagination = this.subjects.meta.pagination;
+        this.professorData = this.professors.data;
+        this.pagination = this.professors.meta.pagination;
 
     },
 
     methods: {
-        handleDeleteSubject(subject) {          //การลบ Delete
+        handleDeleteprofessor(professor) {          //การลบ Delete
             this.$swal.fire({
-                title: "คุณต้องการที่จะลบวิชา" + subject.name_th + '?',
+                title: "คุณต้องการที่จะลบอาจารย์" + professor.fullname + '?',
                 showDenyButton: true,
                 showCancelButton: true,
                 showConfirmButton: false,
                 denyButtonText: 'ลบ'
             }).then((result) => {
                 if (result.isDenied) {
-                    Inertia.delete(this.route('dashboard.subjects.destroy', subject.id));
+                    Inertia.delete(this.route('dashboard.professors.destroy', professor.id));
                     nextTick(()=> {
                         window.location.reload();
                     })
