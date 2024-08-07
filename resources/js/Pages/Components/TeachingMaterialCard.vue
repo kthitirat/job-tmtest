@@ -4,7 +4,7 @@
         class="flex justify-center py-6 min-h-[670px]">
         <div class="max-w-sm w-full border border-slate-200 p-4 text-gray-700 hover:text-red-800 hover:shadow-lg transition-all ease-in-out duration-500 cursor-pointer relative">
             <img v-if="subject.image.data.length > 0" :src="subject.image.data[0].url" class="w-full  object-cover">
-            <div class="mt-4 space-y-4">
+            <div class="mt-2 space-y-4">
                 <p class="text-lg text-center leading-5">รายวิชา {{ subject.code }} {{ subject.name_th }}</p>
                 <div class="text-sm text-center text-gray-700 font-normal space-y-2"> 
                     <div>
@@ -12,9 +12,9 @@
                         <p>อาจารย์ {{ professor.prefix }} {{ professor.first_name }} {{ professor.last_name }}</p>
                         <p>{{ professor.department.name }}</p>
                     </div>
-                    <p>เผยแพร่วันที่ {{ subject.published_at }}</p>
+                    <p>เผยแพร่วันที่ {{ subject.display_published_at }}</p>
                     <!-- <p>จำนวนผู้เยี่ยมชม: {{ subject.view }}</p> -->
-                    </div>                 
+                    </div>                
                                                         
                     <div class="mt-4 flex gap-2 items-center justify-end text-blue-600 absolute bottom-4 right-4 text-xs">
                         <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor">
