@@ -18,7 +18,8 @@
                         <div class="label">
                             <span class="label-text">รหัสวิชา</span>                    
                         </div>
-                        <input v-model="form.code" type="text" placeholder="รหัสวิชา" class="input input-bordered w-full" />              
+                        <input v-model="form.code" type="text" placeholder="รหัสวิชา" class="input input-bordered w-full" />    
+                        <p class="text-red-500 text-sm">{{ $page.props.errors.code }}</p>          
                     </label>
                 </div>   
                 <div class="w-full">
@@ -26,7 +27,8 @@
                         <div class="label">
                             <span class="label-text">ชื่อวิชา(ภาษาไทย)</span>                    
                         </div>
-                        <input v-model="form.name_th"  type="text" placeholder="ชื่อวิชา(ภาษาไทย)" class="input input-bordered w-full" />              
+                        <input v-model="form.name_th" type="text" placeholder="ชื่อวิชา(ภาษาไทย)" class="input input-bordered w-full" /> 
+                        <p class="text-red-500 text-sm">{{ $page.props.errors.name_th }}</p>                 
                     </label>
                 </div> 
                 <div class="w-full">
@@ -34,7 +36,8 @@
                         <div class="label">
                             <span class="label-text">ชื่อวิชา(ภาษาอังกฤษ)</span>                    
                         </div>
-                        <input v-model="form.name_en"  type="text" placeholder="ชื่อวิชา(ภาษาอังกฤษ)" class="input input-bordered w-full" />              
+                        <input v-model="form.name_en" type="text" placeholder="ชื่อวิชา(ภาษาอังกฤษ)" class="input input-bordered w-full" /> 
+                        <p class="text-red-500 text-sm">{{ $page.props.errors.name_en }}</p>                
                     </label>
                 </div>  
                 <div class="w-full">
@@ -42,7 +45,8 @@
                         <div class="label">
                             <span class="label-text">หน่วยกิต</span>                    
                         </div>
-                        <input v-model="form.unit"  type="text" placeholder="เช่น 3(3-3-0-6)" class="input input-bordered w-full" />              
+                        <input v-model="form.unit"  type="text" placeholder="เช่น 3(3-3-0-6)" class="input input-bordered w-full" /> 
+                        <p class="text-red-500 text-sm">{{ $page.props.errors.unit }}</p>                       
                     </label>
                 </div>
                 <div class="w-full">
@@ -50,7 +54,8 @@
                         <div class="label">
                             <span class="label-text">วันที่เผยแพร่</span>                    
                         </div>
-                        <input v-model="form.published_at"  type="date" placeholder="" class="input input-bordered w-full" />              
+                        <input v-model="form.published_at"  type="date" placeholder="" class="input input-bordered w-full" />   
+                        <p class="text-red-500 text-sm">{{ $page.props.errors.published_at }}</p>              
                     </label>
                 </div>
             </div>       
@@ -61,6 +66,7 @@
                         <span class="label-text">คำอธิบายรายวิชา</span>                    
                     </div>
                     <textarea v-model="form.description"  placeholder="คำอธิบายรายวิชา" class="textarea textarea-bordered textarea-md w-full" rows="5"></textarea>
+                    <p class="text-red-500 text-sm">{{ $page.props.errors.description }}</p>   
                 </label>
             </div>  
             
@@ -95,6 +101,7 @@
                     </div>
                 </div>
             </div>
+            <p class="text-red-500 text-sm">{{ $page.props.errors.professor }}</p>   
 
             <div class="w-full md:grid-cols-3 gap-2 p-4">
                 <span class="label-text">เอกสารการสอน</span>                        
@@ -118,8 +125,7 @@
                             </svg>
                         </button>   
                     </div>
-                </div>            
-               
+                </div> 
                 <button class="w-40 h-40 border border-dashed flex flex-col pb-2 justify-center items-center" 
                         type="button" @click="$refs.documentInputRef.click()">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -128,6 +134,7 @@
                 </button>
                 <input @change="handleSubjectDocument" ref="documentInputRef" type="file" class="hidden" accept="application/pdf">
             </div>
+            <p class="text-red-500 text-sm">{{ $page.props.errors.documents }}</p>             
             <div class="col-span-3 w-full flex justify-end mt-4">
                 <button class="uppercase btn btn-primary">Submit</button>
             </div>
@@ -165,7 +172,8 @@ export default {
                 published_at: null,
                 description: null,
                 professors: [],
-                documents: []
+                documents: [],
+                to_delete_documents: []
             },
             displaySubjectImage: null,
             currentSelectingProfessor: ""
@@ -194,10 +202,15 @@ export default {
         this.subject.documents.data.forEach(doc => {
             this.form.documents.push(doc)
         })
+
+
      
     },
     methods:{
         handleRemoveDucument(index){
+            if (this.form.documents[index].id !== undefined) {
+                this.form.to_delete_documents.push(this.form.documents[index]);
+            }
             this.form.documents.splice(index, 1);
         },
         handleSubjectDocument(event){
@@ -224,7 +237,7 @@ export default {
                 url = this.route('dashboard.subjects.update', this.subject.raw_id);
             }
             router.post( url, {
-                _method: 'patch',
+                _method: this.mode === 'create' ? 'POST' : 'PATCH',
                 image: this.form.image,
                 code: this.form.code,
                 name_th: this.form.name_th,
@@ -234,6 +247,7 @@ export default {
                 description: this.form.description,
                 professors: this.form.professors,
                 documents: this.form.documents,
+                to_delete_documents: this.form.to_delete_documents
             })
 
             // console.log('--------');

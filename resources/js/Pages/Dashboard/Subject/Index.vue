@@ -48,9 +48,7 @@
                         <button type="button" class="btn btn-error text-white btn-sm font-light">
                             Delete
                         </button>
-                    </td>
-                 
-              
+                    </td>   
                 </tr>
                 </tbody>
             </table>

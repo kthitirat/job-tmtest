@@ -20,6 +20,7 @@ class CreateOrUpdateSubjectRequest extends FormRequest
             'image' => ['required', 'image', 'mimes:jpeg,png,jpg', 'max:102400'], // Maximum size 100MB
             'documents' => ['required', 'array', 'min:1'],
             'documents.*' => ['required', 'mimes:pdf,ppt,pptx,doc,docx,xls,xlsx', 'max:102400'], // Maximum size 100MB
+            'to_delete_documents.*' => ['nullable']
 
 
             //ตัวอย่างของเดิม
