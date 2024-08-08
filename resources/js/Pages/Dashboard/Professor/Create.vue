@@ -1,6 +1,6 @@
 <template>
     <Layout>
-        <SubjectForm :professors="professors" mode="create"/>
+        <ProfessorForm :departments="departments" mode="create"/>
     </Layout>
 </template>
 
@@ -9,20 +9,21 @@
 import Layout from "@/Pages/Dashboard/Layout/Layout.vue";
 //import {Link} from "@inertiajs/vue3";
 import {router} from "@inertiajs/vue3";
-import SubjectForm from "@/Pages/Dashboard/Subject/SubjectForm.vue";
+import ProfessorForm from "@/Pages/Dashboard/Professor/ProfessorForm.vue";
 
 export default {
-    name:"SubjectCreate",
+    name:"CreateProfessor",
     components: {
-        SubjectForm,
+        ProfessorForm,
         Layout
         
     },
     props:{
-        professors: {
+        departments: {
             type: Array,
             required: true
-        }
+        },
+     
     },
 //     mounted() {         
 //     },

@@ -5,7 +5,11 @@ namespace App\Http\Controllers\Dashboard;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Professor;
+use App\Models\Department;
 use App\Http\Transformers\ProfessorTransformer;
+use App\Http\Transformers\DepartmentTransformer;
+use App\Http\Requests\Dashboard\CreateOrUpdateProfessorRequest;
+use App\Actions\Dashboard\SaveProfessorAction;
 use Inertia\Inertia;
 
 class ProfessorController extends Controller
@@ -21,25 +25,35 @@ class ProfessorController extends Controller
 
     public function create(Professor $professor)
     {
-        dd($professor);
-        // $professors = Professor::all();
-        // $professorData = fractal($professors, new ProfessorTransformer())->includeImage()->toArray()['data'];
-        // return Inertia::render('Dashboard/Subject/Create')->with([
-        //     'professors' => $professorData
-        // ]);
+        $departments = Department::all();
+        $departmentData = fractal($departments, new DepartmentTransformer())->toArray()['data'];       
+        return Inertia::render('Dashboard/Professor/Create')->with([
+            'departments' => $departmentData
+        ]);
+    }
+
+    public function store(CreateOrUpdateProfessorRequest $request, SaveProfessorAction $action)
+    {
+        $action->execute(new Professor(), $request->validated());
+        return redirect()->route('dashboard.professors.index')->with('success', 'professor updated.');
     }
 
     public function edit(Professor $professor)
     {
-        dd($professor);
-        // $professors = Professor::all();
-        // $professorData = fractal($professors, new ProfessorTransformer())->includeImage()->toArray()['data'];
-        // $subjectData = fractal($subject, new SubjectTransformer())->includeImage()->includeDocuments()->toArray();
-        // return Inertia::render('Dashboard/Subject/Edit')->with([
-        //     'professors' => $professorData,
-        //     'subject'   => $subjectData
-        // ]);
+        $departments = Department::all();
+        $departmentData = fractal($departments, new DepartmentTransformer())->toArray()['data'];
+        $professorData = fractal($professor, new ProfessorTransformer())->includeImage()->toArray();
+        return Inertia::render('Dashboard/Professor/Edit')->with([
+            'professor' => $professorData,
+            'departments' => $departmentData
+        ]);
         
+    }
+
+    public function update(Professor $professor, CreateOrUpdateProfessorRequest $request, SaveProfessorAction $action)
+    {
+        $action->execute($professor, $request->validated());
+        return redirect()->route('dashboard.professors.index')->with('success', 'professor updated.');
     }
 
     public function destroy(Professor $professor)

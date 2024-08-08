@@ -1,26 +1,26 @@
 <template>
     <Layout>
-        <SubjectForm :professors="professors" :subject="subject" mode="edit"/>
+        <ProfessorForm :departments="departments" :professor="professor"  mode="edit"/>
     </Layout>
 </template>
 
 <script>
 import Layout from "@/Pages/Dashboard/Layout/Layout.vue";
 import {router} from '@inertiajs/vue3'
-import SubjectForm from "@/Pages/Dashboard/Subject/SubjectForm.vue";
+import ProfessorForm from "@/Pages/Dashboard/Professor/ProfessorForm.vue";
 
 export default {
-    name: "EditSubject",
+    name: "EditProfessor",
     components: {
-        SubjectForm,
+        ProfessorForm,
         Layout
     },
     props: {
-        professors: {
+        departments: {
             type: Array,
             required: true
         },
-        subject:{
+        professor:{
             type: Object,
             required: true
         }
