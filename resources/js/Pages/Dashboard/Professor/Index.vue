@@ -1,5 +1,8 @@
 <template>
     <Layout>
+        <div class="flex justify-end">
+            <Link :href="route('dashboard.professors.create')" class="uppercase btn btn-primary">New Professor</Link>
+        </div>
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">

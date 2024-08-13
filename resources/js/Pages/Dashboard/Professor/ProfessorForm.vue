@@ -11,6 +11,7 @@
                         <img v-if="displayProfessorImage!=null" :src="displayProfessorImage" class="w-full h-72 object-cover" >
                     </button>  
                     <input @change="handleSubjectImage" ref="imageInputRef" type="file" class="hidden" accept="image/*">  
+                    <p class="text-red-500 text-sm">{{ $page.props.errors.image }}</p>          
                 </div> 
             <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4 p-4">                
                 <div class="w-full">
