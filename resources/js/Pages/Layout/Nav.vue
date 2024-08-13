@@ -6,7 +6,8 @@
         </div>
         <!-- แถบส่วนหัวที่มีเงา -->
         <div class="w-full shadow-md h-20 flex items-center justify-between px-4 lg:px-32 fixed top-10 left-0 right-0 z-50 bg-white">
-            <a :href="route('index')"><img src="https://www.aru.ac.th/asi/images/logo_asi3.png" alt="Logo" class="h-16 mr-2"></a>
+            <!-- <a :href="route('index')"><img src="https://www.aru.ac.th/asi/images/logo_asi3.png" alt="Logo" class="h-16 mr-2"></a> -->
+            <a :href="route('index')"><p class="text-[#92392f] text-2xl">Ayutthaya Studies Institute</p></a>
             <!-- <Link class="flex items-center" :href="route('index')">
                 <h1 class="text-4xl font-bold uppercase">ARU</h1>
                 <h1 class="text-4xl font-bold text-blue-600">Teaching Materials</h1>

@@ -14,9 +14,13 @@ use Inertia\Inertia;
 
 class SubjectController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $subjects = Subject::orderBy('published_at', 'desc')->paginate(20);
+        $filters =  $request->only('search');
+        $subjects = Subject::with('professors')
+                    ->filter($filters)
+                    ->orderBy('published_at', 'desc')                   
+                    ->paginate(20);
         $subjectData = fractal($subjects, new SubjectTransformer())->includeImage()->toArray();
         return Inertia::render('Dashboard/Subject/Index')->with([
             'subjects' =>  $subjectData

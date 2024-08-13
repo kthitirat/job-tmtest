@@ -35,7 +35,7 @@
                     <div class="w-full mt-2">
                         <p class="font-bold">วันที่เผยแพร่:</p>
                         <div class="flex gap-1">
-                            <p class="ml-4 md:ml-8">{{ subject.published_at }}</p>
+                            <p class="ml-4 md:ml-8">{{ subject.display_published_at }}</p>
                         </div>
                     </div>
                     <div class="w-full mt-2">

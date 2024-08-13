@@ -3,6 +3,23 @@
         <div class="flex justify-end">
             <Link :href="route('dashboard.subjects.create')" class="uppercase btn btn-primary">New Subject</Link>
         </div>
+        
+        <div class="mt-4">
+            <label class="form-control w-full max-w-xs relative">
+                <input ref="searchInputRef" v-model="search" type="text" placeholder="ค้นหา..." class="input input-bordered w-full max-w-xs pr-8 " />
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 16 16"
+                    fill="currentColor"
+                    class="h-4 w-4 opacity-70 absolute top-1/2 right-2 transform -translate-y-1/2">
+                    <path
+                        fill-rule="evenodd"
+                        d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+                        clip-rule="evenodd" />
+                </svg>
+            </label>
+        </div>
+
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg mt-4">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                 <thead class="text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 ">
@@ -73,8 +90,10 @@
 
 import Layout from "@/Pages/Dashboard/Layout/Layout.vue";
 import {Link} from "@inertiajs/vue3";
+import axios from 'axios';
 import {Inertia} from "@inertiajs/inertia";
 import {nextTick} from "vue";
+import {router} from "@inertiajs/vue3";
 
 export default {
     name:"SubjectIndex",
@@ -92,12 +111,15 @@ export default {
     data() {
         return{
             subjectData: null,
-            pagination: null
+            pagination: null,
+            search: new URLSearchParams(window.location.search).get('search') ?? null,
+            debouce:null            
         }
     },
     mounted() {
         this.subjectData = this.subjects.data;
         this.pagination = this.subjects.meta.pagination;
+        this.$refs.searchInputRef.focus();
 
     },
 
@@ -121,7 +143,26 @@ export default {
         selectPage(pag) {
             Inertia.get(pag.url);
         },
+        async submitSearch() {
+            const url = this.route('dashboard.subjects.index', {
+                search: this.search
+            })
+            await router.visit(url, {
+                only: ['subjects'],
+            })
+        }
     },
+    watch:{  
+        search(){
+            clearTimeout(this.debouce)
+            this.debouce = setTimeout(() => {
+                this.submitSearch();
+            }, 500 );
+            // console.log('-----------');
+            // console.log(this.search);
+            // console.log('-----------');
+        }
+    }
 }
 </script>
 
